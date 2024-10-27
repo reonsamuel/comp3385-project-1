@@ -9,6 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
           currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
         }
       });
+      
+      // Add hover effect event listeners
+      square.addEventListener('mouseenter', () => {
+        square.classList.add('hover');
+      });
+      square.addEventListener('mouseleave', () => {
+        square.classList.remove('hover');
+      });
     });
 });
 
