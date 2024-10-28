@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     squares.forEach(square => {
       square.classList.add("square");
       square.addEventListener('click', () => {
-        if (!square.textContent) {
+        if (!square.textContent && !gameOver) {
           square.textContent = currentPlayer;
           square.classList.add(currentPlayer);
           checkWinner();
@@ -13,15 +13,22 @@ document.addEventListener("DOMContentLoaded", () => {
       
       // Add hover effect event listeners
       square.addEventListener('mouseenter', () => {
-        square.classList.add('hover');
+        if (!square.textContent) {
+          square.classList.add('hover');
+        }
       });
       square.addEventListener('mouseleave', () => {
         square.classList.remove('hover');
       });
     });
+
+    // Add event listener for new game button
+    const newGameButton = document.querySelector('.btn');
+    newGameButton.addEventListener('click', resetGame);
 });
 
 let currentPlayer = 'X';
+let gameOver = false;
 
 const checkWinner = () => {
     const squares = document.querySelectorAll('.square');
@@ -35,6 +42,19 @@ const checkWinner = () => {
       if (squares[a].textContent && squares[a].textContent === squares[b].textContent && squares[a].textContent === squares[c].textContent) {
         document.getElementById('status').textContent = `Congratulations! ${squares[a].textContent} is the Winner!`;
         document.getElementById('status').classList.add('you-won');
+        gameOver = true;
       }
     });
+};
+
+const resetGame = () => {
+    const squares = document.querySelectorAll('.square');
+    squares.forEach(square => {
+      square.textContent = '';
+      square.classList.remove('X', 'O', 'hover');
+    });
+    document.getElementById('status').textContent = 'Move your mouse over a square and click to play an X or an O.';
+    document.getElementById('status').classList.remove('you-won');
+    currentPlayer = 'X'; // Reset currentPlayer to X
+    gameOver = false; // Reset gameOver flag
 };
