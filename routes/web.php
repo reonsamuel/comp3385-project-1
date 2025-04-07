@@ -9,3 +9,8 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return view('about');
 });
+
+Route::resource('properties', PropertyController::class);
+
+Route::resource('properties', \App\Http\Controllers\PropertyController::class);
+
